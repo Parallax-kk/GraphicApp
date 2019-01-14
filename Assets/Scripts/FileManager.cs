@@ -26,7 +26,7 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// 画像テクスチャ
     /// </summary>
-    private Texture2D m_Texture = null;
+    public Texture2D m_Texture = null;
     
     /// <summary>
     /// 画像ファイル読み込み
@@ -69,7 +69,7 @@ public class FileManager : MonoBehaviour
             }
             var mainPanelSize = m_MainPanel.GetComponent<RectTransform>().sizeDelta;
 
-            Vector2 imageSize = m_RawImagePanel.GetComponent<RectTransform>().sizeDelta;
+            Vector2 imageSize = new Vector2(width, height);
 
             // アスペクト比修正
             if (width > mainPanelSize.x - 10)
@@ -82,6 +82,7 @@ public class FileManager : MonoBehaviour
                 float ratio = (mainPanelSize.y - 10) / imageSize.y;
                 imageSize = imageSize * ratio;
             }
+            
 
             m_RawImagePanel.GetComponent<RectTransform>().sizeDelta = imageSize;
 
