@@ -27,6 +27,9 @@ public class A01 : MonoBehaviour
     /// </summary>
     public void ReplaceChannel()
     {
+        if (transform.root.GetComponent<FileManager>().m_Texture == null)
+            return;
+
         // Pixel情報取得
         m_Texture = transform.root.GetComponent<FileManager>().m_Texture;
         int width = m_Texture.width;

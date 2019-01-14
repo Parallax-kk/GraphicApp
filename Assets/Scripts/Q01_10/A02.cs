@@ -27,6 +27,9 @@ public class A02 : MonoBehaviour
     /// </summary>
     public void GrayScale()
     {
+        if (transform.root.GetComponent<FileManager>().m_Texture == null)
+            return;
+
         // Pixel情報取得
         m_Texture = transform.root.GetComponent<FileManager>().m_Texture;
         int width = m_Texture.width;
