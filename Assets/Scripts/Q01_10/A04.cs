@@ -51,8 +51,6 @@ public class A04 : MonoBehaviour
             }
         }
 
-        float averageY = listY.Sum() / listY.Count();
-
         float maxThreshold = 0.0f;
         float max = 0.0f;
 
