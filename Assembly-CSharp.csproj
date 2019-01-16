@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Q01_10\A05.cs" />
     <Compile Include="Assets\Scripts\Q01_10\A06.cs" />
     <Compile Include="Assets\Scripts\Q01_10\A07.cs" />
+    <Compile Include="Assets\Scripts\Q01_10\A08.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>F:/work/GraphicApp/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
