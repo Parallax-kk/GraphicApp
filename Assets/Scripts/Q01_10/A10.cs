@@ -47,10 +47,6 @@ public class A10 : MonoBehaviour
             {
                 int pxIndex = w + width * h;
 
-                List<float> listR = new List<float>();
-                List<float> listG = new List<float>();
-                List<float> listB = new List<float>();
-
                 SortedDictionary<float, Color> sortedDicClors = new SortedDictionary<float, Color>();
 
                 // 上端

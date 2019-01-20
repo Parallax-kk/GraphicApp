@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class A12     : MonoBehaviour
+public class A12 : MonoBehaviour
 {
     /// <summary>
     /// 画像のテクスチャ
@@ -23,7 +23,7 @@ public class A12     : MonoBehaviour
     }
 
     /// <summary>
-    /// `モーションフィルタ
+    /// モーションフィルタ
     /// </summary>
     public void MotionBlur()
     {
