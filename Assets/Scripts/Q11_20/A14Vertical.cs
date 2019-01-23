@@ -38,6 +38,19 @@ public class A14Vertical : MonoBehaviour
         int height = m_Texture.height;
         Color[] pixels = m_Texture.GetPixels();
 
+        // グレースケール化
+        List<float> listGrayPixels = new List<float>();
+        for (int h = 0; h < height; h++)
+        {
+            for (int w = 0; w < width; w++)
+            {
+                int pxIndex = w + width * h;
+
+                float y = 0.299f * pixels[pxIndex].r + 0.587f * pixels[pxIndex].g + 0.114f * pixels[pxIndex].b;
+                listGrayPixels.Add(y);
+            }
+        }
+
         // 書き換え用テクスチャの作成
         Color[] change_pixels = new Color[pixels.Length];
 
@@ -49,15 +62,19 @@ public class A14Vertical : MonoBehaviour
 
                 float y = 0.0f;
 
+                // 縦方向
+                //      0 -1 0
+                // K = [0  1 0]
+                //      0  0 0
+
                 // 上端
                 if (h == 0)
                 {
-                    y = 0.2126f * pixels[pxIndex].r + 0.7152f * pixels[pxIndex].g + 0.0722f * pixels[pxIndex].b;
+                    y = listGrayPixels[pxIndex];
                 }
                 else
                 {
-                    y = Mathf.Abs((0.2126f * pixels[pxIndex        ].r + 0.7152f * pixels[pxIndex        ].g + 0.0722f * pixels[pxIndex        ].b)
-                      -           (0.2126f * pixels[pxIndex - width].r + 0.7152f * pixels[pxIndex - width].g + 0.0722f * pixels[pxIndex - width].b));
+                    y = (-1.0f * listGrayPixels[pxIndex - width] + listGrayPixels[pxIndex]);
                 }
 
                 change_pixels[pxIndex] = new Color(y,y,y);

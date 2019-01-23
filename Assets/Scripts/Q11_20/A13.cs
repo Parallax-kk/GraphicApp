@@ -38,6 +38,19 @@ public class A13 : MonoBehaviour
         int height = m_Texture.height;
         Color[] pixels = m_Texture.GetPixels();
 
+        // グレースケール化
+        List<float> listGrayPixels = new List<float>();
+        for (int h = 0; h < height; h++)
+        {
+            for (int w = 0; w < width; w++)
+            {
+                int pxIndex = w + width * h;
+
+                float y = 0.299f * pixels[pxIndex].r + 0.587f * pixels[pxIndex].g + 0.114f * pixels[pxIndex].b;
+                listGrayPixels.Add(y);
+            }
+        }
+
         // 書き換え用テクスチャの作成
         Color[] change_pixels = new Color[pixels.Length];
 
@@ -56,28 +69,27 @@ public class A13 : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + 1        ].r + 0.7152f * pixels[pxIndex + 1        ].g + 0.0722f * pixels[pxIndex + 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width    ].r + 0.7152f * pixels[pxIndex + width    ].g + 0.0722f * pixels[pxIndex + width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width + 1].r + 0.7152f * pixels[pxIndex + width + 1].g + 0.0722f * pixels[pxIndex + width + 1].b);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex + 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex + width    ]);
+                        listColors.Add(listGrayPixels[pxIndex + width + 1]);
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        listColors.Add(0.2126f * pixels[pxIndex - 1        ].r + 0.7152f * pixels[pxIndex - 1        ].g + 0.0722f * pixels[pxIndex - 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width - 1].r + 0.7152f * pixels[pxIndex + width - 1].g + 0.0722f * pixels[pxIndex + width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width    ].r + 0.7152f * pixels[pxIndex + width    ].g + 0.0722f * pixels[pxIndex + width    ].b);
+                        listColors.Add(listGrayPixels[pxIndex - 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex + width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex + width    ]);
                     }
                     else
                     {
-                        listColors.Add(0.2126f * pixels[pxIndex - 1        ].r + 0.7152f * pixels[pxIndex - 1        ].g + 0.0722f * pixels[pxIndex - 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + 1        ].r + 0.7152f * pixels[pxIndex + 1        ].g + 0.0722f * pixels[pxIndex + 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width - 1].r + 0.7152f * pixels[pxIndex + width - 1].g + 0.0722f * pixels[pxIndex + width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width    ].r + 0.7152f * pixels[pxIndex + width    ].g + 0.0722f * pixels[pxIndex + width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width + 1].r + 0.7152f * pixels[pxIndex + width + 1].g + 0.0722f * pixels[pxIndex + width + 1].b);
+                        listColors.Add(listGrayPixels[pxIndex - 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex + 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex + width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex + width    ]);
+                        listColors.Add(listGrayPixels[pxIndex + width + 1]);
                     }
                 }
                 // 下端
@@ -87,27 +99,27 @@ public class A13 : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + 1        ].r + 0.7152f * pixels[pxIndex + 1        ].g + 0.0722f * pixels[pxIndex + 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width    ].r + 0.7152f * pixels[pxIndex - width    ].g + 0.0722f * pixels[pxIndex - width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width + 1].r + 0.7152f * pixels[pxIndex - width + 1].g + 0.0722f * pixels[pxIndex - width + 1].b);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex + 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex - width    ]);
+                        listColors.Add(listGrayPixels[pxIndex - width + 1]);
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - 1        ].r + 0.7152f * pixels[pxIndex - 1        ].g + 0.0722f * pixels[pxIndex - 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width - 1].r + 0.7152f * pixels[pxIndex - width - 1].g + 0.0722f * pixels[pxIndex - width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width    ].r + 0.7152f * pixels[pxIndex - width    ].g + 0.0722f * pixels[pxIndex - width    ].b);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex - 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex - width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex - width    ]);
                     }
                     else
                     {
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - 1        ].r + 0.7152f * pixels[pxIndex - 1        ].g + 0.0722f * pixels[pxIndex - 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + 1        ].r + 0.7152f * pixels[pxIndex + 1        ].g + 0.0722f * pixels[pxIndex + 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width - 1].r + 0.7152f * pixels[pxIndex - width - 1].g + 0.0722f * pixels[pxIndex - width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width    ].r + 0.7152f * pixels[pxIndex - width    ].g + 0.0722f * pixels[pxIndex - width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width + 1].r + 0.7152f * pixels[pxIndex - width + 1].g + 0.0722f * pixels[pxIndex - width + 1].b);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex - 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex + 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex - width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex - width    ]);
+                        listColors.Add(listGrayPixels[pxIndex - width + 1]);
                     }
                 }
                 else
@@ -116,35 +128,35 @@ public class A13 : MonoBehaviour
                     if (w == 0)
                     {
                         listColors.Add(0.0f);
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + 1        ].r + 0.7152f * pixels[pxIndex + 1        ].g + 0.0722f * pixels[pxIndex + 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width    ].r + 0.7152f * pixels[pxIndex - width    ].g + 0.0722f * pixels[pxIndex - width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width + 1].r + 0.7152f * pixels[pxIndex - width + 1].g + 0.0722f * pixels[pxIndex - width + 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width    ].r + 0.7152f * pixels[pxIndex + width    ].g + 0.0722f * pixels[pxIndex + width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width + 1].r + 0.7152f * pixels[pxIndex + width + 1].g + 0.0722f * pixels[pxIndex + width + 1].b);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex + 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex - width    ]);
+                        listColors.Add(listGrayPixels[pxIndex - width + 1]);
+                        listColors.Add(listGrayPixels[pxIndex + width    ]);
+                        listColors.Add(listGrayPixels[pxIndex + width + 1]);
                     }
                     // 右端
                     else if (w == width - 1)
                     {
                         listColors.Add(0.0f);
-                        listColors.Add(0.2126f * pixels[pxIndex - 1        ].r + 0.7152f * pixels[pxIndex - 1        ].g + 0.0722f * pixels[pxIndex - 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width - 1].r + 0.7152f * pixels[pxIndex - width - 1].g + 0.0722f * pixels[pxIndex - width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width    ].r + 0.7152f * pixels[pxIndex - width    ].g + 0.0722f * pixels[pxIndex - width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width - 1].r + 0.7152f * pixels[pxIndex + width - 1].g + 0.0722f * pixels[pxIndex + width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width    ].r + 0.7152f * pixels[pxIndex + width    ].g + 0.0722f * pixels[pxIndex + width    ].b);
+                        listColors.Add(listGrayPixels[pxIndex - 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex - width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex - width    ]);
+                        listColors.Add(listGrayPixels[pxIndex + width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex + width    ]);
                     }
                     else
                     {
-                        listColors.Add(0.2126f * pixels[pxIndex - 1        ].r + 0.7152f * pixels[pxIndex - 1        ].g + 0.0722f * pixels[pxIndex - 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex            ].r + 0.7152f * pixels[pxIndex            ].g + 0.0722f * pixels[pxIndex            ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + 1        ].r + 0.7152f * pixels[pxIndex + 1        ].g + 0.0722f * pixels[pxIndex + 1        ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width - 1].r + 0.7152f * pixels[pxIndex - width - 1].g + 0.0722f * pixels[pxIndex - width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width    ].r + 0.7152f * pixels[pxIndex - width    ].g + 0.0722f * pixels[pxIndex - width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex - width + 1].r + 0.7152f * pixels[pxIndex - width + 1].g + 0.0722f * pixels[pxIndex - width + 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width - 1].r + 0.7152f * pixels[pxIndex + width - 1].g + 0.0722f * pixels[pxIndex + width - 1].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width    ].r + 0.7152f * pixels[pxIndex + width    ].g + 0.0722f * pixels[pxIndex + width    ].b);
-                        listColors.Add(0.2126f * pixels[pxIndex + width + 1].r + 0.7152f * pixels[pxIndex + width + 1].g + 0.0722f * pixels[pxIndex + width + 1].b);
+                        listColors.Add(listGrayPixels[pxIndex - 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex            ]);
+                        listColors.Add(listGrayPixels[pxIndex + 1        ]);
+                        listColors.Add(listGrayPixels[pxIndex - width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex - width    ]);
+                        listColors.Add(listGrayPixels[pxIndex - width + 1]);
+                        listColors.Add(listGrayPixels[pxIndex + width - 1]);
+                        listColors.Add(listGrayPixels[pxIndex + width    ]);
+                        listColors.Add(listGrayPixels[pxIndex + width + 1]);
                     }
                 }
 
