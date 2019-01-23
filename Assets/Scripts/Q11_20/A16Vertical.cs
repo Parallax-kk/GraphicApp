@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class A15Horizon : MonoBehaviour
+public class A16Vertical : MonoBehaviour
 {
     /// <summary>
     /// 画像のテクスチャ
@@ -25,9 +25,9 @@ public class A15Horizon : MonoBehaviour
     }
 
     /// <summary>
-    /// Sobelフィルタ Horizon
+    /// Prewittフィルタ Vertical
     /// </summary>
-    public void SobelFilterHorizon()
+    public void PrewittFilterVertical()
     {
         if (transform.root.GetComponent<FileManager>().m_Texture == null)
             return;
@@ -37,6 +37,7 @@ public class A15Horizon : MonoBehaviour
         int width = m_Texture.width;
         int height = m_Texture.height;
         Color[] pixels = m_Texture.GetPixels();
+
 
         // グレースケール化
         List<float> listGrayPixels = new List<float>();
@@ -59,11 +60,10 @@ public class A15Horizon : MonoBehaviour
             for (int w = 0; w < width; w++)
             {
                 int pxIndex = w + width * h;
-
-                // 横方向
-                //       1  2  1
-                // K = [ 0  0  0]
-                //      -1 -2 -1
+                // 縦方向
+                //       -1  -1 -1
+                // K = [  0   0  0]
+                //        1   1  1
                
                 float y = 0.0f;
 
@@ -73,20 +73,20 @@ public class A15Horizon : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        y = (-2.0f * listGrayPixels[pxIndex + width    ])
-                          + (-1.0f * listGrayPixels[pxIndex + width + 1]);
+                        y = (1.0f * listGrayPixels[pxIndex + width    ])
+                          + (1.0f * listGrayPixels[pxIndex + width + 1]);
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        y = (-1.0f * listGrayPixels[pxIndex + width - 1])
-                          + (-2.0f * listGrayPixels[pxIndex + width    ]);
+                        y = (1.0f * listGrayPixels[pxIndex + width - 1])
+                          + (1.0f * listGrayPixels[pxIndex + width    ]);
                     }
                     else
                     {
-                        y = (-1.0f * listGrayPixels[pxIndex + width - 1])
-                          + (-2.0f * listGrayPixels[pxIndex + width    ]) 
-                          + (-1.0f * listGrayPixels[pxIndex + width + 1]);
+                        y = (1.0f * listGrayPixels[pxIndex + width - 1])
+                          + (1.0f * listGrayPixels[pxIndex + width    ]) 
+                          + (1.0f * listGrayPixels[pxIndex + width + 1]);
                     }
                 }
                 // 下端
@@ -95,20 +95,20 @@ public class A15Horizon : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        y = (2.0f * listGrayPixels[pxIndex - width    ])
-                          + (1.0f * listGrayPixels[pxIndex - width + 1]);
+                        y = (-1.0f * listGrayPixels[pxIndex - width    ])
+                          + (-1.0f * listGrayPixels[pxIndex - width + 1]);
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        y = (1.0f * listGrayPixels[pxIndex - width - 1])
-                          + (2.0f * listGrayPixels[pxIndex - width    ]);
+                        y = (-1.0f * listGrayPixels[pxIndex - width - 1])
+                          + (-1.0f * listGrayPixels[pxIndex - width    ]);
                     }
                     else
                     {
-                        y = (1.0f * listGrayPixels[pxIndex - width - 1])
-                          + (2.0f * listGrayPixels[pxIndex - width    ])
-                          + (1.0f * listGrayPixels[pxIndex - width + 1]);
+                        y = (-1.0f * listGrayPixels[pxIndex - width - 1])
+                          + (-1.0f * listGrayPixels[pxIndex - width    ])
+                          + (-1.0f * listGrayPixels[pxIndex - width + 1]);
                     }
                 }
                 else
@@ -116,29 +116,30 @@ public class A15Horizon : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        y = ( 2.0f * listGrayPixels[pxIndex - width    ])
-                          + ( 1.0f * listGrayPixels[pxIndex - width + 1])
-                          + (-2.0f * listGrayPixels[pxIndex + width    ])
-                          + (-1.0f * listGrayPixels[pxIndex + width + 1]);
+                        y = (-1.0f * listGrayPixels[pxIndex - width    ])
+                          + (-1.0f * listGrayPixels[pxIndex - width + 1])
+                          + ( 1.0f * listGrayPixels[pxIndex + width    ])
+                          + ( 1.0f * listGrayPixels[pxIndex + width + 1]);
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        y = ( 1.0f * listGrayPixels[pxIndex - width - 1])
-                          + ( 2.0f * listGrayPixels[pxIndex - width    ])
-                          + (-1.0f * listGrayPixels[pxIndex + width - 1])
-                          + (-2.0f * listGrayPixels[pxIndex + width    ]);
+                        y = (-1.0f * listGrayPixels[pxIndex - width - 1])
+                          + (-1.0f * listGrayPixels[pxIndex - width    ])
+                          + ( 1.0f * listGrayPixels[pxIndex + width    ])
+                          + ( 1.0f * listGrayPixels[pxIndex + width - 1]);
                     }
                     else
                     {
-                        y = ( 1.0f * listGrayPixels[pxIndex - width - 1])
-                          + ( 2.0f * listGrayPixels[pxIndex - width    ])
-                          + ( 1.0f * listGrayPixels[pxIndex - width + 1])
-                          + (-1.0f * listGrayPixels[pxIndex + width - 1])
-                          + (-2.0f * listGrayPixels[pxIndex + width    ])
-                          + (-1.0f * listGrayPixels[pxIndex + width + 1]);
+                        y = (-1.0f * listGrayPixels[pxIndex - width - 1])
+                          + (-1.0f * listGrayPixels[pxIndex - width    ])
+                          + (-1.0f * listGrayPixels[pxIndex - width + 1])
+                          + ( 1.0f * listGrayPixels[pxIndex + width - 1])
+                          + ( 1.0f * listGrayPixels[pxIndex + width    ])
+                          + ( 1.0f * listGrayPixels[pxIndex + width + 1]);
                     }
                 }
+
                 if (y < 0)
                     y = 0.0f;
 
