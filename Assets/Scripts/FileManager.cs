@@ -26,8 +26,10 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// 画像テクスチャ
     /// </summary>
-    public Texture2D m_Texture = null;
-    
+    private Texture2D m_Texture = null;
+    public void      SetTexture(Texture2D tex) { m_Texture = tex;  }
+    public Texture2D GetTexture(             ) { return m_Texture; }
+
     /// <summary>
     /// 画像ファイル読み込み
     /// </summary>
@@ -82,16 +84,16 @@ public class FileManager : MonoBehaviour
                 float ratio = (mainPanelSize.y - 10) / imageSize.y;
                 imageSize = imageSize * ratio;
             }
-            
 
             m_RawImagePanel.GetComponent<RectTransform>().sizeDelta = imageSize;
 
             m_Texture = new Texture2D(width, height);
             m_Texture.LoadImage(binaryData);
 
-            var rect = new Rect(0, 0, width, height);
-            var pivot = new Vector2(0.5f, 0.5f);
-            var sprite = Sprite.Create(m_Texture, rect, pivot);
+            Rect    rect   = new Rect(0, 0, width, height);
+            Vector2 pivot  = new Vector2(0.5f, 0.5f);
+            Sprite  sprite = Sprite.Create(m_Texture, rect, pivot);
+
             m_RawImage.texture = sprite.texture;
         }
     }
@@ -101,7 +103,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void SaveFile()
     {
-        if (m_Texture != null)
+        Texture2D outputTexture = ImageUtil.m_Texture;
+
+        if (outputTexture != null)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = "";
@@ -116,7 +120,7 @@ public class FileManager : MonoBehaviour
                 //OKボタンがクリックされたとき、選択されたファイル名を表示する
                 Debug.Log("Save File :" + saveFileDialog.FileName);
 
-                var png = m_Texture.EncodeToPNG();
+                var png = outputTexture.EncodeToPNG();
                 File.WriteAllBytes(saveFileDialog.FileName, png);
             }
         }

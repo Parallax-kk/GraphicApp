@@ -27,11 +27,11 @@ public class A03 : MonoBehaviour
     /// </summary>
     public void Binarization()
     {
-        if (transform.root.GetComponent<FileManager>().m_Texture == null)
+        if (transform.root.GetComponent<FileManager>().GetTexture() == null)
             return;
 
         // Pixel情報取得
-        m_Texture = transform.root.GetComponent<FileManager>().m_Texture;
+        m_Texture = transform.root.GetComponent<FileManager>().GetTexture();
         int width = m_Texture.width;
         int height = m_Texture.height;
         Color[] pixels = m_Texture.GetPixels();
@@ -68,6 +68,6 @@ public class A03 : MonoBehaviour
         var pivot = new Vector2(0.5f, 0.5f);
         var sprite = Sprite.Create(m_Texture, rect, pivot);
         m_RawImage.texture = sprite.texture;
-        transform.root.GetComponent<FileManager>().m_Texture = m_Texture;
+        transform.root.GetComponent<FileManager>().SetTexture(m_Texture);
     }
 }
