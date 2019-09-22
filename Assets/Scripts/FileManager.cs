@@ -78,13 +78,11 @@ public class FileManager : MonoBehaviour
             {
                 float ratio = (mainPanelSize.x - 10) / width;
                 imageSize = new Vector2(width, height) * ratio;
-                Debug.Log(ratio);
             }
             else
             {
                 float ratio = (mainPanelSize.y - 10) / imageSize.y;
                 imageSize = imageSize * ratio;
-                Debug.Log(ratio);
             }
 
             m_RawImagePanel.GetComponent<RectTransform>().sizeDelta = imageSize;

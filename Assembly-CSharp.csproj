@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Q11_20\A16Horizon.cs" />
     <Compile Include="Assets\Scripts\Q11_20\A16Vertical.cs" />
     <Compile Include="Assets\Scripts\Q11_20\A17.cs" />
+    <Compile Include="Assets\Scripts\Q11_20\A18.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/work/GitHub/GraphicApp/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

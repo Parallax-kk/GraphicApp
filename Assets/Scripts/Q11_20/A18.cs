@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class A17 : MonoBehaviour
+public class A18 : MonoBehaviour
 {
     /// <summary>
     /// 画像のテクスチャ
@@ -25,9 +25,9 @@ public class A17 : MonoBehaviour
     }
 
     /// <summary>
-    /// Laplacianフィルタ
+    /// Embossフィルタ
     /// </summary>
-    public void LaplacianFilter()
+    public void EmbossFilter()
     {
         if (transform.root.GetComponent<FileManager>().GetTexture() == null)
             return;
@@ -46,9 +46,7 @@ public class A17 : MonoBehaviour
             {
                 int pxIndex = w + width * h;
 
-                List<float> listRGB = new List<float> { pixels[pxIndex].r, pixels[pxIndex].g, pixels[pxIndex].b };
-                float y = (listRGB.Max() + listRGB.Min()) * 0.5f;
-                listGrayPixels.Add(y);
+                listGrayPixels.Add(pixels[pxIndex].r * 0.0722f + pixels[pxIndex].g * 0.7152f + pixels[pxIndex].b * 0.2126f);
             }
         }
 
@@ -60,10 +58,10 @@ public class A17 : MonoBehaviour
             for (int w = 0; w < width; w++)
             {
                 int pxIndex = w + width * h;
-
-                //     0  1  0
-                //K = [1 -4  1]
-                //     0  1  0
+                
+                //      -2 -1  0
+                //K = [ -1  1  1 ]
+                //       0  1  2
 
                 float y = 0.0f;
 
@@ -73,23 +71,25 @@ public class A17 : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        y = (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex         + 1]) *  1.0f
-                          + (listGrayPixels[pxIndex + width    ]) *  1.0f;
+                          + (listGrayPixels[pxIndex + width    ]) *  1.0f
+                          + (listGrayPixels[pxIndex + width + 1]) *  2.0f;
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        y = (listGrayPixels[pxIndex         - 1]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
-                          + (listGrayPixels[pxIndex + width    ]) *  1.0f;
+                        y = (listGrayPixels[pxIndex         - 1]) *  -1.0f
+                          + (listGrayPixels[pxIndex            ]) *   1.0f
+                          + (listGrayPixels[pxIndex + width    ]) *   1.0f;
                     }
                     else
                     {
-                        y = (listGrayPixels[pxIndex         - 1]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex         - 1]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex         + 1]) *  1.0f
-                          + (listGrayPixels[pxIndex + width    ]) *  1.0f;
+                          + (listGrayPixels[pxIndex + width    ]) *  1.0f
+                          + (listGrayPixels[pxIndex + width + 1]) *  2.0f;
                     }
                 }
                 // 下端
@@ -98,22 +98,24 @@ public class A17 : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        y = (listGrayPixels[pxIndex - width    ]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex - width    ]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex         + 1]) *  1.0f;
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        y = (listGrayPixels[pxIndex - width    ]) *  1.0f
-                          + (listGrayPixels[pxIndex         - 1]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f;
+                        y = (listGrayPixels[pxIndex - width - 1]) * -2.0f
+                          + (listGrayPixels[pxIndex - width    ]) * -1.0f
+                          + (listGrayPixels[pxIndex         - 1]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f;
                     }
                     else
                     {
-                        y = (listGrayPixels[pxIndex - width    ]) *  1.0f
-                          + (listGrayPixels[pxIndex         - 1]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex - width - 1]) * -2.0f
+                          + (listGrayPixels[pxIndex - width    ]) * -1.0f
+                          + (listGrayPixels[pxIndex         - 1]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex         + 1]) *  1.0f;
                     }
                 }
@@ -122,33 +124,38 @@ public class A17 : MonoBehaviour
                     // 左端
                     if (w == 0)
                     {
-                        y = (listGrayPixels[pxIndex - width    ]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex - width    ]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex         + 1]) *  1.0f
-                          + (listGrayPixels[pxIndex + width    ]) *  1.0f;
+                          + (listGrayPixels[pxIndex + width    ]) *  1.0f
+                          + (listGrayPixels[pxIndex + width    ]) *  2.0f;
 
                     }
                     // 右端
                     else if (w == width - 1)
                     {
-                        y = 
-                          + (listGrayPixels[pxIndex - width    ]) *  1.0f
-                          + (listGrayPixels[pxIndex         - 1]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex - width - 1]) * -2.0f
+                          + (listGrayPixels[pxIndex - width    ]) * -1.0f
+                          + (listGrayPixels[pxIndex         - 1]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex + width    ]) *  1.0f;
                     }
                     else
                     {
-                        y = (listGrayPixels[pxIndex - width    ]) *  1.0f
-                          + (listGrayPixels[pxIndex         - 1]) *  1.0f
-                          + (listGrayPixels[pxIndex            ]) * -4.0f
+                        y = (listGrayPixels[pxIndex - width - 1]) * -2.0f
+                          + (listGrayPixels[pxIndex - width    ]) * -1.0f
+                          + (listGrayPixels[pxIndex         - 1]) * -1.0f
+                          + (listGrayPixels[pxIndex            ]) *  1.0f
                           + (listGrayPixels[pxIndex         + 1]) *  1.0f
-                          + (listGrayPixels[pxIndex + width    ]) *  1.0f;
+                          + (listGrayPixels[pxIndex + width    ]) *  1.0f
+                          + (listGrayPixels[pxIndex + width + 1]) *  2.0f;
                     }
                 }
 
                 if (y < 0)
                     y *= -1.0f;
+
+                Debug.Log(y);
                 change_pixels[pxIndex] = new Color(y,y,y);
             }
         }
