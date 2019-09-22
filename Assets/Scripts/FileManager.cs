@@ -78,11 +78,13 @@ public class FileManager : MonoBehaviour
             {
                 float ratio = (mainPanelSize.x - 10) / width;
                 imageSize = new Vector2(width, height) * ratio;
+                Debug.Log(ratio);
             }
-            if (imageSize.y > mainPanelSize.y - 10)
+            else
             {
                 float ratio = (mainPanelSize.y - 10) / imageSize.y;
                 imageSize = imageSize * ratio;
+                Debug.Log(ratio);
             }
 
             m_RawImagePanel.GetComponent<RectTransform>().sizeDelta = imageSize;
@@ -95,6 +97,7 @@ public class FileManager : MonoBehaviour
             Sprite  sprite = Sprite.Create(m_Texture, rect, pivot);
 
             m_RawImage.texture = sprite.texture;
+            m_RawImage.color = Color.white;
         }
     }
 
